@@ -29,6 +29,7 @@ body {
     height: calc(100% - 46px - 75px);
     background-color: #fff;
     border-right: solid 1px #e3e3e3;
+    overflow: auto;
 }
 
 .contatto {
@@ -200,6 +201,7 @@ body {
     padding: 3% 5%;
     height: calc(100% - 75px - 75px);
     background: url('../img/background.png');
+    overflow: auto;
 }
 
 .app-container .chat-container main .bubble {
@@ -235,6 +237,7 @@ body {
     height: 75px;
     background-color: #f3eeea;
     font-size: 22px;
+    z-index: 9;
 }
 
 .app-container .chat-container footer .tool {
@@ -251,4 +254,9 @@ body {
     width: 100%;
     border: none;
     border-radius: 5px;
+}
+
+/* TEMPLATE */
+.template {
+    display: none;
 }
