@@ -83,7 +83,7 @@ body {
     margin-left: auto;
     margin-right: 2%;
     color: #464444;
-    font-size: 14px;
+    font-size: 12px;
 }
 
 
@@ -156,6 +156,7 @@ body {
 
 .app-container .contacts-container .notifications .text {
     padding: 0 2%;
+    font-size: 15px;
 }
 
 .app-container .contacts-container .notifications .text a {
@@ -194,9 +195,39 @@ body {
 }
 
 .app-container .chat-container main {
+    display: flex;
+    flex-direction: column;
+    padding: 3% 5%;
     height: calc(100% - 75px - 75px);
     background: url('../img/background.png');
 }
+
+.app-container .chat-container main .bubble {
+    position: relative;
+    max-width: 50%;
+    padding: 10px 15px 22px;
+    margin: 10px 0;
+    border-radius: 10px;
+}
+
+.bubble.sent {
+    align-self: flex-end;
+    background-color: #d5f9ba;
+}
+
+.bubble.received {
+    align-self: flex-start;
+    background-color: #fff;
+}
+
+.app-container .chat-container main .bubble small {
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+    font-size: 11px;
+    color: #898b8e;
+}
+
 
 .chat-container footer {
     display: flex;
@@ -215,7 +246,7 @@ body {
 }
 
 .chat-container footer .messaggio input {
-    padding: 0 2%;
+    padding: 0 3%;
     height: 50px;
     width: 100%;
     border: none;
