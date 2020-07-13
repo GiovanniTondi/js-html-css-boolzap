@@ -41,6 +41,12 @@ body {
     background-color: #fff;
     border-top: solid 1px #e9ebeb;
     border-bottom: solid 1px #e9ebeb;
+    transition: background-color .3s;
+}
+
+.contatto:hover {
+    cursor: pointer;
+    background-color: #a0ede6;
 }
 
 .contatto.selected {
@@ -138,6 +144,12 @@ body {
 
 .tool i {
     padding: 5%;
+    transition: all .3s;
+}
+
+.tool i:hover {
+    cursor: pointer;
+    color: #888484;
 }
 
 .app-container .contacts-container .notifications {
@@ -145,7 +157,7 @@ body {
     align-items: center;
     height: 75px;
     padding: 0 2%;
-    background-color: #8edafc;
+    background-color: #b1ddf1;
 }
 
 .app-container .contacts-container .notifications .bell {
