@@ -15,17 +15,20 @@ body {
 #wrapper {
     width: 100%;
     height: 100vh;
-    background-color: #dcdbd1;
+    background-color: #e4e3dc;
 }
 
 .head-bg {
     height: 15%;
+    min-height: 150px;
     background-color: #009688;
 }
 
-/* CONTATTI */
+/* CONTATTI GENERALE */
 .contacts {
-    height: 100%;
+    height: calc(100% - 46px - 75px);
+    background-color: #fff;
+    border-right: solid 1px #e3e3e3;
 }
 
 .contatto {
@@ -35,6 +38,8 @@ body {
     width: 100%;
     height: 80px;
     background-color: #fff;
+    border-top: solid 1px #e9ebeb;
+    border-bottom: solid 1px #e9ebeb;
 }
 
 .contatto.selected {
@@ -68,7 +73,7 @@ body {
 
 }
 
-.contatto .text .preview {
+.contatto .text .subtitle {
     font-size: 12px;
     color: #464444;
 }
@@ -88,9 +93,9 @@ body {
     top: 5%;
     left: 10%;
     display: flex;
-    /* DEBUG:  */
     width: 80%;
     height: 90%;
+    overflow: hidden;
 }
 
 .app-container section header {
@@ -109,31 +114,35 @@ body {
 }
 
 .app-container .contacts-container header {
+    border-right: solid 1px #ccc;
+}
+
+.app-container .contacts-container header,
+.app-container .chat-container header {
     padding: 0 2%;
     display: flex;
-    justify-content: space-between;
     align-items: center;
     background-color: #eaeaea;
 }
 
 
-.app-container .contacts-container .tool {
-    padding: 0 5%;
-    width: 70%;
-    font-size: 22px;
-    color: #b1b1b1;
+.app-container .contacts-container .tool,
+.app-container .chat-container .tool {
+    min-width: 100px;
+    font-size: 24px;
+    color: #a19b9b;
     text-align: right;
-
+    margin-left: auto;
 }
 
 .tool i {
-    padding-left: 5%;
+    padding: 5%;
 }
 
 .app-container .contacts-container .notifications {
     display: flex;
     align-items: center;
-    min-height: 75px;
+    height: 75px;
     padding: 0 2%;
     background-color: #8edafc;
 }
@@ -174,10 +183,41 @@ body {
 }
 
 
-
 /* CHAT */
 .app-container .chat-container {
     width: 70%;
     height: 100%;
-    background-color: green;
+}
+
+.app-container .chat-container header {
+    background-color: #eaeaea;
+}
+
+.app-container .chat-container main {
+    height: calc(100% - 75px - 75px);
+    background: url('../img/background.png');
+}
+
+.chat-container footer {
+    display: flex;
+    align-items: center;
+    height: 75px;
+    background-color: #f3eeea;
+    font-size: 22px;
+}
+
+.app-container .chat-container footer .tool {
+    text-align: center;
+}
+
+.chat-container footer .messaggio {
+    flex-grow: 2;
+}
+
+.chat-container footer .messaggio input {
+    padding: 0 2%;
+    height: 50px;
+    width: 100%;
+    border: none;
+    border-radius: 5px;
 }
