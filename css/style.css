@@ -1,4 +1,5 @@
 /* Regole generali */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
 * {
     padding: 0;
@@ -6,6 +7,10 @@
     box-sizing: border-box;
 }
 
+body {
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+}
 
 #wrapper {
     width: 100%;
@@ -17,6 +22,57 @@
     height: 15%;
     background-color: #009688;
 }
+
+/* CONTATTI */
+.contacts {
+    height: 100%;
+}
+
+.contatto {
+    display: flex;
+    align-items: center;
+    padding: 2%;
+    width: 100%;
+    height: 10%;
+    background-color: #fff;
+}
+
+.user {
+    position: relative;
+    height: 60px;
+    width: 60px;
+    background-color: #f2f2f2;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.user img {
+    position: absolute;
+    top: -10px;
+    left: -18px;
+}
+
+.contatto .text {
+    padding: 2% 5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 100%;
+}
+
+.contatto .text .contact-name {
+
+}
+
+.contatto .text .preview {
+    font-size: 12px;
+    color: #464444;
+}
+
+.contatto .time {
+    margin-left: auto;
+}
+
 
 /* APP-CONTAINER */
 .app-container {
@@ -43,33 +99,16 @@
 .app-container .contacts-container {
     width: 30%;
     height: 100%;
-    /* background-color: red; */
 }
 
 .app-container .contacts-container header {
+    padding: 0 2%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: #eaeaea;
 }
 
-.app-container .contacts-container .user {
-    /* position: relative;
-    height: 70%;
-    width: 20%;
-    margin: 5%;
-    background-color: #fff;
-    border-radius: 50%;
-    overflow: hidden; */
-}
-
-.app-container .contacts-container .user img {
-    /* position: absolute;
-    top: 0;
-    left: -5px;
-    height: 125%; */
-    width: 80%;
-}
 
 .app-container .contacts-container .tool {
     padding: 0 5%;
@@ -81,18 +120,41 @@
 }
 
 .tool i {
-    padding-left: 1%;
+    padding-left: 5%;
+}
+
+.app-container .contacts-container .notifications {
+    display: flex;
+    align-items: center;
+    padding: 4% 2%;
+    background-color: #8edafc;
+}
+
+.app-container .contacts-container .notifications .bell {
+    padding: 4%;
+    color: #8edafc;
+    border-radius: 50%;
+    background-color: #fff;
+}
+
+.app-container .contacts-container .notifications .text {
+    padding: 0 2%;
+}
+
+.app-container .contacts-container .notifications .text a {
+    color: #464444;
 }
 
 .search-box {
     background-color: #f5f1f1;
-    padding: 5%;
+    padding: 2%;
 }
 
 .search {
-    padding: 5%;
+    padding: 2%;
     text-align: center;
     background-color: #fff;
+    color: #b7b9bb;
 }
 
 #search {
