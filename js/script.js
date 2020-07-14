@@ -6,13 +6,17 @@ function oraAttuale() {
     return hours + ':' + minutes;
 }
 
-function generaContatti() {
-    var nomi = ['Michele','Fabio','Samuele','Alessandro','Claudia','Davide','Federico'];
+function generaContatti(array) {
+
+    if (!array || array.length == 0) {
+        var array = ['Michele','Fabio','Samuele','Alessandro','Claudia','Davide','Federico'];
+    }
 
     var target = $('.contacts-container .contacts');
-    for (var i = 0; i < nomi.length; i++) {
+    target.html('');
+    for (var i = 0; i < array.length; i++) {
         var template = $('.template .contatto').clone();
-        $(template).find('.contact-name').text(nomi[i]);
+        $(template).find('.contact-name').text(array[i]);
         target.append(template);
     }
 }
@@ -29,6 +33,10 @@ function autoReply() {
 
 function listenerKeyup() {
     var msg = $('#messaggio');
+    var searchBox = $('#search');
+
+    searchBox.keyup(filterUser);
+
     msg.keyup(function (event) {
         var key = event.which;
         if (key == '13' && msg.val() != '') {
@@ -48,6 +56,33 @@ function sendMessage(txt) {
     autoReply();
 }
 
+function collectName() {
+    var objNomi = $('.contacts .contatto .contact-name');
+    var nomi = [];
+    objNomi.each(function functionName() {
+        nomi.push($(this).text());
+    })
+
+    return nomi;
+}
+
+function filterUser() {
+    var filtro = $(this).val();
+    // console.log(filtro);
+    var nomi = collectName();
+    var nomiFiltrati = [];
+    if (!filtro) {
+        generaContatti();
+    } else {
+        for (var i = 0; i < nomi.length; i++) {
+            nomi[i] = nomi[i].toLowerCase();
+            if (nomi[i].includes(filtro)) {
+                nomiFiltrati.push(nomi[i]);
+            }
+        }
+        generaContatti(nomiFiltrati);
+    }
+}
 
 
 function init() {
