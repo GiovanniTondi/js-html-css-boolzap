@@ -8,16 +8,22 @@ function oraAttuale() {
 
 function generaContatti(array) {
 
-    if (!array || array.length == 0) {
+    if (!array) {
         var array = ['Michele','Fabio','Samuele','Alessandro','Claudia','Davide','Federico'];
     }
 
     var target = $('.contacts-container .contacts');
     target.html('');
-    for (var i = 0; i < array.length; i++) {
-        var template = $('.template .contatto').clone();
-        $(template).find('.contact-name').text(array[i]);
-        target.append(template);
+
+    if (array.length > 0) {
+
+        for (var i = 0; i < array.length; i++) {
+            var template = $('.template .contatto').clone();
+            $(template).find('.contact-name').text(array[i]);
+            target.append(template);
+        }
+    } else {
+        target.text('Nessuna corrispondenza!');
     }
 }
 
@@ -35,7 +41,20 @@ function listenerKeyup() {
     var msg = $('#messaggio');
     var searchBox = $('#search');
 
-    searchBox.keyup(filterUser);
+    var nomi = collectName();
+    searchBox.keyup(function(){
+        var filtro = $(this).val();
+        var nomiFiltrati = isStringInArray(filtro, nomi);
+
+        if (nomiFiltrati) {
+            generaContatti(nomiFiltrati);
+        } else if (filtro) {
+            var arrVuoto = [];
+            generaContatti(arrVuoto);
+        } else {
+            generaContatti();
+        }
+    });
 
     msg.keyup(function (event) {
         var key = event.which;
@@ -66,24 +85,49 @@ function collectName() {
     return nomi;
 }
 
-function filterUser() {
+function filtraUtenti() {
     var filtro = $(this).val();
-    // console.log(filtro);
     var nomi = collectName();
-    var nomiFiltrati = [];
-    if (!filtro) {
-        generaContatti();
-    } else {
-        for (var i = 0; i < nomi.length; i++) {
-            nomi[i] = nomi[i].toLowerCase();
-            if (nomi[i].includes(filtro)) {
-                nomiFiltrati.push(nomi[i]);
-            }
-        }
+
+    console.log('nomi',filtro);
+    var nomiFiltrati = isStringInArray(filtro, nomi);
+    console.log('nomiFiltrati',nomiFiltrati);
+    if (nomiFiltrati) {
         generaContatti(nomiFiltrati);
+    } else if (filtro) {
+        var arrVuoto = [];
+        generaContatti(arrVuoto);
+
+        console.log('Nessun contatto trovato');
+    } else {
+        generaContatti();
     }
 }
 
+function isStringInArray(string, array) {
+
+    if (!string) {
+        return false;
+    } else {
+        var corrispondenza = false;
+        var arrayFiltrato = [];
+
+        for (var i = 0; i < array.length; i++) {
+            array[i] = array[i].toLowerCase();
+            if (array[i].includes(string)) {
+                arrayFiltrato.push(array[i]);
+                corrispondenza = true;
+            }
+        }
+
+        if (!corrispondenza) {
+            return false;
+        }
+
+        return arrayFiltrato;
+    }
+
+}
 
 function init() {
     generaContatti()
