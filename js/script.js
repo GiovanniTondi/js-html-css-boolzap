@@ -17,25 +17,42 @@ function generaContatti() {
     }
 }
 
-function sendMessage() {
+function autoReply() {
+    setTimeout(function () {
+        var chat = $('.chat-container main');
+        var template = $('.template .bubble.received').clone();
+        $(template).children('p').text('ok');
+        $(template).children('small').text(oraAttuale());
+        chat.append(template);
+    }, 1000);
+}
+
+function listenerKeyup() {
     var msg = $('#messaggio');
-    var chat = $('.chat-container main');
-    msg.keydown(function (event) {
+    msg.keyup(function (event) {
         var key = event.which;
         if (key == '13' && msg.val() != '') {
-            var template = $('.template .bubble').clone();
-            $(template).children('p').text(msg.val());
-            $(template).children('small').text(oraAttuale());
-            chat.append(template);
+            var txt = msg.val();
             msg.val('');
+            sendMessage(txt);
         }
     })
 }
 
+function sendMessage(txt) {
+    var chat = $('.chat-container main');
+    var template = $('.template .bubble.sent').clone();
+    $(template).children('p').text(txt);
+    $(template).children('small').text(oraAttuale());
+    chat.append(template);
+    autoReply();
+}
+
+
 
 function init() {
     generaContatti()
-    sendMessage();
+    listenerKeyup();
 }
 
 
