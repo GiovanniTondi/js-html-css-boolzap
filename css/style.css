@@ -208,12 +208,15 @@ body {
 }
 
 .app-container .chat-container main {
-    display: flex;
+    background: url('../img/background.png');
+    height: calc(100% - 75px - 75px);
+    overflow: auto;
+}
+
+.app-container .chat-container main .chat {
+    display: none;
     flex-direction: column;
     padding: 3% 5%;
-    height: calc(100% - 75px - 75px);
-    background: url('../img/background.png');
-    overflow: auto;
 }
 
 .app-container .chat-container main .bubble {
@@ -326,4 +329,8 @@ body {
 /* TEMPLATE */
 .template {
     display: none;
+}
+
+.app-container .chat-container main .chat.selected {
+    display: flex;
 }

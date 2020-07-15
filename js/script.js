@@ -17,10 +17,16 @@ function generaContatti(array) {
 
     if (array.length > 0) {
 
+        var chatTarget = $('.chat-container main');
         for (var i = 0; i < array.length; i++) {
             var template = $('.template .contatto').clone();
+            var chatTemplate = $('.template .chat-template .chat').clone();
+            template.attr('data-id', i);
+            chatTemplate.attr('data-id', i);
+            // chatTemplate.addClass('hidden');
             $(template).find('.contact-name').text(array[i]);
             target.append(template);
+            chatTarget.append(chatTemplate);
         }
     } else {
         target.text('Nessuna corrispondenza!');
@@ -82,9 +88,10 @@ function filtraUtenti() {
 }
 
 // send function
-function sendMessage(txt, type) {
-    var chat = $('.chat-container main');
-    var template = $('.template .bubble').clone();
+function sendMessage(txt, type, chatId) {
+    console.log('entro in send');
+    var chat = $('.chat-container main .chat[data-id="' + chatId + '"]');
+    var template = $('.template .message-template .bubble').clone();
     template.addClass(type);
     $(template).children('.message-text').text(txt);
     $(template).children('small').text(oraAttuale());
@@ -116,8 +123,11 @@ function listenerKeyup() {
         if (key == '13' && msg.val() != '') {
             var txt = msg.val();
             msg.val('');
-            sendMessage(txt, 'sent');
-            setTimeout(function () { sendMessage('ok', 'received') }, 1000);
+
+            var id = $('.chat.selected').data('id');
+
+            sendMessage(txt, 'sent', id);
+            setTimeout(function () { sendMessage('ok', 'received', id) }, 1000);
         }
     })
 }
@@ -135,14 +145,26 @@ function chatDropdown() {
             $(this).parents('.bubble').remove();
         })
     })
+}
 
+function selectChat() {
 
+    $(document).on('click', '.contacts .contatto', function () {
+
+        var userId = $(this).data('id');
+
+        console.log($('.chat[data-id=' + userId + ']'));
+        $('.chat').removeClass('selected');
+        $('.chat[data-id=' + userId + ']').addClass('selected');
+
+    })
 }
 
 function init() {
     generaContatti()
     listenerKeyup();
     chatDropdown();
+    selectChat();
 }
 
 
