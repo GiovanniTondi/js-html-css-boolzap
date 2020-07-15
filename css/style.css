@@ -76,8 +76,9 @@ body {
     height: 100%;
 }
 
-.contatto .text .contact-name {
-
+#contact-name {
+    font-weight: bold;
+    font-size: 18px;
 }
 
 .contatto .text .subtitle {

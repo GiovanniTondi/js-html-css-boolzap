@@ -3,7 +3,21 @@ function oraAttuale() {
     var d = new Date();
     var minutes = d.getMinutes();
     var hours = d.getHours();
+    if (minutes < 10) {
+        minutes = '0' + minutes;
+    }
     return hours + ':' + minutes;
+}
+
+function generaChat(int) {
+
+    var chatTarget = $('.chat-container main');
+
+    for (var i = 0; i < int; i++) {
+        var chatTemplate = $('.template .chat-template .chat').clone();
+        chatTemplate.attr('data-id', i);
+        chatTarget.append(chatTemplate);
+    }
 }
 
 function generaContatti(array) {
@@ -17,16 +31,11 @@ function generaContatti(array) {
 
     if (array.length > 0) {
 
-        var chatTarget = $('.chat-container main');
         for (var i = 0; i < array.length; i++) {
             var template = $('.template .contatto').clone();
-            var chatTemplate = $('.template .chat-template .chat').clone();
             template.attr('data-id', i);
-            chatTemplate.attr('data-id', i);
-            // chatTemplate.addClass('hidden');
             $(template).find('.contact-name').text(array[i]);
             target.append(template);
-            chatTarget.append(chatTemplate);
         }
     } else {
         target.text('Nessuna corrispondenza!');
@@ -151,20 +160,32 @@ function selectChat() {
 
     $(document).on('click', '.contacts .contatto', function () {
 
-        var userId = $(this).data('id');
+        var user = $(this);
+        var username = $(this).find('.contact-name').text();
+        var userId = user.data('id');
 
-        console.log($('.chat[data-id=' + userId + ']'));
+        $('.contacts .contatto').removeClass('selected');
+        user.addClass('selected');
+        $('#contact-name').text(username);
+        $('#contact-subtitle').text('Ultimo accesso oggi alle..');
+        $('#chat-user-img').show();
+
+        // console.log($('.chat[data-id=' + userId + ']'));
         $('.chat').removeClass('selected');
         $('.chat[data-id=' + userId + ']').addClass('selected');
+
+
 
     })
 }
 
 function init() {
     generaContatti()
+    generaChat(7)
     listenerKeyup();
     chatDropdown();
     selectChat();
+    // console.log(oraAttuale());
 }
 
 
