@@ -218,10 +218,12 @@ body {
 
 .app-container .chat-container main .bubble {
     position: relative;
+    min-width: 20%;
     max-width: 50%;
-    padding: 10px 15px 22px;
+    padding: 10px 15px 22px 15px;
     margin: 10px 0;
     border-radius: 10px;
+    transition: all .8s;
 }
 
 .bubble.sent {
@@ -234,6 +236,16 @@ body {
     background-color: #fff;
 }
 
+.app-container .chat-container main .bubble:hover {
+    padding: 10px 30px 22px 15px;
+    transition: all .3s;
+}
+
+.app-container .chat-container main .bubble .message-text {
+    /* display: inline-block;
+    max-width: 95%; */
+}
+
 .app-container .chat-container main .bubble small {
     position: absolute;
     bottom: 5px;
@@ -242,6 +254,19 @@ body {
     color: #898b8e;
 }
 
+.app-container .chat-container main .bubble .message-options {
+    opacity: 0;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    transition: opacity .3s;
+}
+
+.app-container .chat-container main .bubble:hover .message-options {
+    opacity: 1;
+    transition: opacity .3s ease-in-out;
+
+}
 
 .chat-container footer {
     display: flex;

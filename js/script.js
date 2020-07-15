@@ -1,4 +1,4 @@
-
+// general function
 function oraAttuale() {
     var d = new Date();
     var minutes = d.getMinutes();
@@ -27,58 +27,35 @@ function generaContatti(array) {
     }
 }
 
-function autoReply() {
-    setTimeout(function () {
-        var chat = $('.chat-container main');
-        var template = $('.template .bubble.received').clone();
-        $(template).children('p').text('ok');
-        $(template).children('small').text(oraAttuale());
-        chat.append(template);
-    }, 1000);
-}
+function isStringInArray(string, array) {
 
-function listenerKeyup() {
-    var msg = $('#messaggio');
-    var searchBox = $('#search');
+    if (!string) {
+        return false;
+    } else {
+        var corrispondenza = false;
+        var arrayFiltrato = [];
 
-    var nomi = collectName();
-    searchBox.keyup(function(){
-        var filtro = $(this).val();
-        var nomiFiltrati = isStringInArray(filtro, nomi);
-
-        if (nomiFiltrati) {
-            generaContatti(nomiFiltrati);
-        } else if (filtro) {
-            var arrVuoto = [];
-            generaContatti(arrVuoto);
-        } else {
-            generaContatti();
+        for (var i = 0; i < array.length; i++) {
+            array[i] = array[i].toLowerCase();
+            if (array[i].includes(string.toLowerCase())) {
+                arrayFiltrato.push(array[i]);
+                corrispondenza = true;
+            }
         }
-    });
 
-    msg.keyup(function (event) {
-        var key = event.which;
-        if (key == '13' && msg.val() != '') {
-            var txt = msg.val();
-            msg.val('');
-            sendMessage(txt);
+        if (!corrispondenza) {
+            return false;
         }
-    })
-}
 
-function sendMessage(txt) {
-    var chat = $('.chat-container main');
-    var template = $('.template .bubble.sent').clone();
-    $(template).children('p').text(txt);
-    $(template).children('small').text(oraAttuale());
-    chat.append(template);
-    autoReply();
+        return arrayFiltrato;
+    }
+
 }
 
 function collectName() {
     var objNomi = $('.contacts .contatto .contact-name');
     var nomi = [];
-    objNomi.each(function functionName() {
+    objNomi.each(function () {
         nomi.push($(this).text());
     })
 
@@ -104,29 +81,45 @@ function filtraUtenti() {
     }
 }
 
-function isStringInArray(string, array) {
+// send function
+function sendMessage(txt, type) {
+    var chat = $('.chat-container main');
+    var template = $('.template .bubble').clone();
+    template.addClass(type);
+    $(template).children('.message-text').text(txt);
+    $(template).children('small').text(oraAttuale());
+    chat.append(template);
+}
 
-    if (!string) {
-        return false;
-    } else {
-        var corrispondenza = false;
-        var arrayFiltrato = [];
+// listener
+function listenerKeyup() {
+    var msg = $('#messaggio');
+    var searchBox = $('#search');
 
-        for (var i = 0; i < array.length; i++) {
-            array[i] = array[i].toLowerCase();
-            if (array[i].includes(string)) {
-                arrayFiltrato.push(array[i]);
-                corrispondenza = true;
-            }
+    var nomi = collectName();
+    searchBox.keyup(function(){
+        var filtro = $(this).val();
+        var nomiFiltrati = isStringInArray(filtro, nomi);
+
+        if (nomiFiltrati) {
+            generaContatti(nomiFiltrati);
+        } else if (filtro) {
+            var arrVuoto = [];
+            generaContatti(arrVuoto);
+        } else {
+            generaContatti();
         }
+    });
 
-        if (!corrispondenza) {
-            return false;
+    msg.keyup(function (event) {
+        var key = event.which;
+        if (key == '13' && msg.val() != '') {
+            var txt = msg.val();
+            msg.val('');
+            sendMessage(txt, 'sent');
+            setTimeout(function () { sendMessage('ok', 'received') }, 1000);
         }
-
-        return arrayFiltrato;
-    }
-
+    })
 }
 
 function init() {
