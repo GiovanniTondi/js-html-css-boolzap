@@ -241,10 +241,6 @@ body {
     transition: all .3s;
 }
 
-.app-container .chat-container main .bubble .message-text {
-    /* display: inline-block;
-    max-width: 95%; */
-}
 
 .app-container .chat-container main .bubble small {
     position: absolute;
@@ -255,18 +251,52 @@ body {
 }
 
 .app-container .chat-container main .bubble .message-options {
-    opacity: 0;
     position: absolute;
-    top: 10px;
-    right: 10px;
+    padding: 2px;
+    opacity: 0;
+    top: 9px;
+    right: 8px;
+    border-radius: 50%;
     transition: opacity .3s;
 }
 
 .app-container .chat-container main .bubble:hover .message-options {
     opacity: 1;
     transition: opacity .3s ease-in-out;
-
 }
+
+.app-container .chat-container main .bubble .message-options:hover {
+    cursor: pointer;
+}
+
+.app-container .chat-container main .bubble .message-dropdown {
+    display: none;
+    position: absolute;
+    top: 45px;
+    right: 0;
+
+    max-width: 175px;
+
+    background-color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.04) 0px 0px 4px 0px, rgba(0, 0, 0, 0.08) 0px 8px 16px 0px;
+
+    border-radius: 10px;
+    overflow: hidden;
+    z-index: 10;
+}
+
+.app-container .chat-container main .bubble .message-dropdown span {
+    display: block;
+    white-space: nowrap;
+    padding: 10px;
+    transition: all .3s;
+}
+
+.app-container .chat-container main .bubble .message-dropdown span:hover {
+    cursor: pointer;
+    background-color: #a0ede6;
+}
+
 
 .chat-container footer {
     display: flex;

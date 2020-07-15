@@ -122,9 +122,27 @@ function listenerKeyup() {
     })
 }
 
+function chatDropdown() {
+
+    $(document).on('click', '.message-options', function () {
+        $(this).next('.message-dropdown').toggle();
+
+        $('.message-dropdown .message-info').click(function () {
+            console.log('info click');
+        })
+
+        $('.message-dropdown .message-delete').click(function () {
+            $(this).parents('.bubble').remove();
+        })
+    })
+
+
+}
+
 function init() {
     generaContatti()
     listenerKeyup();
+    chatDropdown();
 }
 
 
