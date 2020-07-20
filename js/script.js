@@ -15,32 +15,55 @@ function generaChat(int) {
 
     for (var i = 0; i < int; i++) {
         var chatTemplate = $('.template .chat-template .chat').clone();
+        if (i==0) {
+            var username = $('.contacts .contatto.selected .text .contact-name').text();
+            chatTemplate.addClass('selected');
+            $('#contact-name').text(username);
+            $('#contact-subtitle').text('Ultimo accesso oggi alle..');
+            $('#chat-user-img').show();
+        }
         chatTemplate.attr('data-id', i);
         chatTarget.append(chatTemplate);
     }
 }
 
-function generaContatti(array) {
+function generaContatti() {
 
-    if (!array) {
-        var array = ['Michele','Fabio','Samuele','Alessandro','Claudia','Davide','Federico'];
-    }
+
+    var array = ['Michele','Fabio','Samuele','Alessandro','Claudia','Davide','Federico'];
+
 
     var target = $('.contacts-container .contacts');
     target.html('');
 
-    if (array.length > 0) {
+    for (var i = 0; i < array.length; i++) {
+        var template = $('.template .contatto').clone();
+        if (i==0) {
+            template.addClass('selected');
+        }
+        template.attr('data-id', i);
+        template.find('.contact-name').text(array[i]);
+        template.find('.time').text(oraAttuale());
+        target.append(template);
+    }
 
+}
+
+function searchContactFilter(array) {
+    var target = $('.contacts-container .contacts');
+    target.html('');
+    if (array.length > 0) {
         for (var i = 0; i < array.length; i++) {
             var template = $('.template .contatto').clone();
+
             template.attr('data-id', i);
-            $(template).find('.contact-name').text(array[i]);
+            template.find('.contact-name').text(array[i]);
             target.append(template);
         }
     } else {
         target.text('Nessuna corrispondenza!');
     }
-}
+ }
 
 function isStringInArray(string, array) {
 
@@ -51,8 +74,8 @@ function isStringInArray(string, array) {
         var arrayFiltrato = [];
 
         for (var i = 0; i < array.length; i++) {
-            array[i] = array[i].toLowerCase();
-            if (array[i].includes(string.toLowerCase())) {
+
+            if (array[i].toLowerCase().includes(string.toLowerCase())) {
                 arrayFiltrato.push(array[i]);
                 corrispondenza = true;
             }
@@ -66,6 +89,7 @@ function isStringInArray(string, array) {
     }
 
 }
+
 
 function collectName() {
     var objNomi = $('.contacts .contatto .contact-name');
@@ -96,15 +120,28 @@ function filtraUtenti() {
     }
 }
 
+function scrollDownChat() {
+    var chat = $('.chat-container main .chat.selected');
+    var height = chat[0].scrollHeight;
+    $('.chat-container main').scrollTop(height);
+}
+
 // send function
 function sendMessage(txt, type, chatId) {
-    console.log('entro in send');
+
     var chat = $('.chat-container main .chat[data-id="' + chatId + '"]');
     var template = $('.template .message-template .bubble').clone();
+    var contatto = $('.contacts .contatto.selected');
+
     template.addClass(type);
     $(template).children('.message-text').text(txt);
     $(template).children('small').text(oraAttuale());
     chat.append(template);
+
+    contatto.find('.contact-subtitle').text(txt);
+    contatto.find('.time').text(oraAttuale());
+
+    scrollDownChat();
 }
 
 // listener
@@ -112,18 +149,20 @@ function listenerKeyup() {
     var msg = $('#messaggio');
     var searchBox = $('#search');
 
+    var contattiGenerati = $('.contacts .contatto').clone();
+
+
     var nomi = collectName();
     searchBox.keyup(function(){
         var filtro = $(this).val();
         var nomiFiltrati = isStringInArray(filtro, nomi);
 
         if (nomiFiltrati) {
-            generaContatti(nomiFiltrati);
+            searchContactFilter(nomiFiltrati);
         } else if (filtro) {
-            var arrVuoto = [];
-            generaContatti(arrVuoto);
+            searchContactFilter(nomiFiltrati);
         } else {
-            generaContatti();
+            $('.contacts').html(contattiGenerati);
         }
     });
 
@@ -170,11 +209,11 @@ function selectChat() {
         $('#contact-subtitle').text('Ultimo accesso oggi alle..');
         $('#chat-user-img').show();
 
-        // console.log($('.chat[data-id=' + userId + ']'));
+
         $('.chat').removeClass('selected');
         $('.chat[data-id=' + userId + ']').addClass('selected');
 
-
+        scrollDownChat();
 
     })
 }
